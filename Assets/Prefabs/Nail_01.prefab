@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6576524544379202986}
   - component: {fileID: 2512966686439027789}
   - component: {fileID: 272764027190891719}
-  - component: {fileID: 7504697161497818800}
+  - component: {fileID: -4484794238648022654}
   m_Layer: 0
   m_Name: Nail_01
   m_TagString: Untagged
@@ -104,7 +104,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &7504697161497818800
+--- !u!60 &-4484794238648022654
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
