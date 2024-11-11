@@ -1,11 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class Nails_Behaviour : MonoBehaviour
 {
+
+    SpriteRenderer spriteRenderer;
+
+    //public UnityEngine.Color nail_color;
+
     [SerializeField] private int nail_length;
-    [SerializeField] private int nail_orientation;
+    
+    public enum Orientation
+    {
+        Top,
+        Left, 
+        Right
+    };
+
+    public Orientation nailOrientation;
 
     // Start is called before the first frame update
     void Start()
