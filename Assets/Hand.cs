@@ -22,7 +22,7 @@ public class Hand : MonoBehaviour
             GameObject nailInstance = Instantiate(nail, locators[i].position, locators[i].rotation);
             nailInstance.layer = gameObject.layer +1;
             SpriteRenderer rend = nailInstance.GetComponent<SpriteRenderer>();
-            rend.color = nail_color;
+            //rend.color = nail_color;
         }
     }
 

@@ -21,10 +21,20 @@ public class Nails_Behaviour : MonoBehaviour
 
     public Orientation nailOrientation;
 
+    public Sprite[] sprites;
+
+    private int current_length;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+
+        current_length = UnityEngine.Random.Range(1, sprites.Length);
+
+        renderer.sprite = sprites[current_length];
     }
 
     // Update is called once per frame
@@ -32,4 +42,12 @@ public class Nails_Behaviour : MonoBehaviour
     {
         
     }
+
+
+    private void OnMouseDown()
+    {
+        current_length--;
+        GetComponent<SpriteRenderer>().sprite = sprites[current_length];
+    }
+
 }
