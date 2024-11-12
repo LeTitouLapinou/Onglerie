@@ -20,8 +20,10 @@ public class Hand : MonoBehaviour
     void Start()
     {
         nail_collectionInstance = Instantiate(nail_collectionPrefab, new Vector3(1000f, 1000f, 1000f), Quaternion.identity);
+        
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
 
-        //nail_color = UnityEngine.Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        renderer.color = UnityEngine.Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
 
         getChildInNailCollection();
         InstantiateNailsAtLocators();
