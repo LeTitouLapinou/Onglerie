@@ -46,7 +46,11 @@ public class Nails_Behaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
-        current_length--;
+        if (current_length > 0)
+        {
+            current_length--;
+        }
+        
         GetComponent<SpriteRenderer>().sprite = sprites[current_length];
     }
 
