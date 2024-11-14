@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand_collection_prefab: {fileID: 8950169398440743463, guid: 819b2fcd1bb9e7641a8b84e96eb27a87, type: 3}
+  spawn_position: {x: 0, y: 0, z: 0}
+  particle_system: {fileID: 8793979697950396710, guid: ae787fd74878bc5439cec88a74dfc3a8, type: 3}

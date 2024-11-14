@@ -10,6 +10,8 @@ public class Nails_Behaviour : MonoBehaviour
 
     //public UnityEngine.Color nail_color;
 
+    public GameObject nail_particle;
+
     [SerializeField] private int nail_length;
     
     public enum Orientation
@@ -52,6 +54,21 @@ public class Nails_Behaviour : MonoBehaviour
         }
         
         GetComponent<SpriteRenderer>().sprite = sprites[current_length];
+
+        // Get mouse position in screen space
+        Vector2 mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        // Convert to world space
+        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        // Spawn the particle at the correct position in world space
+        SpawnPartcileAtPosition(worldPosition);
+    }
+
+
+    void SpawnPartcileAtPosition(Vector2 spawn_position)
+    {
+        GameObject particle = Instantiate(nail_particle, spawn_position, Quaternion.identity);
     }
 
 }

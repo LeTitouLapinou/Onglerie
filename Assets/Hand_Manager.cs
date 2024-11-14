@@ -8,8 +8,7 @@ public class Hand_Manager : MonoBehaviour
 
     public GameObject hand_collection_prefab;
     public Vector3 spawn_position;
-
-
+    
     private GameObject[] handList;
     
     

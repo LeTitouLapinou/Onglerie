@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614ae5f212ee2694eaba96d2ec31bd89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nail_particle: {fileID: 8793979697950396710, guid: ae787fd74878bc5439cec88a74dfc3a8, type: 3}
   nail_length: 0
   nailOrientation: 0
   sprites:
