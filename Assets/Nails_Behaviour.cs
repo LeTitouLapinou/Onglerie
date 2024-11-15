@@ -7,9 +7,10 @@ public class Nails_Behaviour : MonoBehaviour
 {
 
     SpriteRenderer spriteRenderer;
+    private Collider2D collider2D;
 
-    //public UnityEngine.Color nail_color;
 
+    public GameObject clean_nail;
     public GameObject nail_particle;
 
     [SerializeField] private int nail_length;
@@ -22,7 +23,6 @@ public class Nails_Behaviour : MonoBehaviour
     };
 
     public Orientation nailOrientation;
-
     public Sprite[] sprites;
 
     private int current_length;
@@ -33,7 +33,8 @@ public class Nails_Behaviour : MonoBehaviour
     void Start()
     {
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-
+        collider2D = renderer.GetComponent<Collider2D>();
+                
         current_length = UnityEngine.Random.Range(1, sprites.Length);
 
         renderer.sprite = sprites[current_length];
@@ -48,25 +49,32 @@ public class Nails_Behaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (current_length > 0)
-        {
-            current_length--;
-        }
-        
-        GetComponent<SpriteRenderer>().sprite = sprites[current_length];
-
         // Get mouse position in screen space
         Vector2 mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
         // Convert to world space
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-        // Spawn the particle at the correct position in world space
-        SpawnPartcileAtPosition(worldPosition);
+        if (current_length > 0)
+        {
+            current_length--;
+
+            // Spawn the particle at the correct position in world space
+            SpawnParticleAtPosition(worldPosition);
+        }
+        
+        if (current_length == 0) 
+        {
+            Instantiate(clean_nail, worldPosition, Quaternion.identity);
+            
+        }
+
+        GetComponent<SpriteRenderer>().sprite = sprites[current_length];
+                
     }
 
 
-    void SpawnPartcileAtPosition(Vector2 spawn_position)
+    void SpawnParticleAtPosition(Vector2 spawn_position)
     {
         GameObject particle = Instantiate(nail_particle, spawn_position, Quaternion.identity);
     }
