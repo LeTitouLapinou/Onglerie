@@ -57,7 +57,7 @@ public class Hand : MonoBehaviour
     {
         for (int i = 0;i < locators.Length; i++)
         {
-            GameObject nailInstance = Instantiate(nailList[Random.Range(0,nailList.Length)], locators[i].position, locators[i].rotation); //On choisit un nail au hasard dans la nailList, et on en spawn un a chaque locator
+            GameObject nailInstance = Instantiate(nailList[Random.Range(0,nailList.Length)], locators[i].position, locators[i].rotation, this.transform); //On choisit un nail au hasard dans la nailList, et on en spawn un a chaque locator
         }
     }
 
