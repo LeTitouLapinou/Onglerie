@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Hand : MonoBehaviour
 {
 
     public GameObject nail_collectionPrefab;
 
-    //public int nail_number = 5;
+    public int clean_nails_number = 0;
     //public Color nail_color;
 
     public Transform[] locators;
@@ -19,11 +20,11 @@ public class Hand : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nail_collectionInstance = Instantiate(nail_collectionPrefab, new Vector3(1000f, 1000f, 1000f), Quaternion.identity);
+        nail_collectionInstance = Instantiate(nail_collectionPrefab, new Vector3(1000f, 1000f, 1000f), Quaternion.identity); //On instancie le prefab de nails pour qu'il soit dans la scene
         
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
 
-        renderer.color = UnityEngine.Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        renderer.color = UnityEngine.Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f); //couleur aleatoire de la main
 
         getChildInNailCollection();
         InstantiateNailsAtLocators();
@@ -62,6 +63,21 @@ public class Hand : MonoBehaviour
     }
 
 
-    //GameObject nailInstance = Instantiate(nail, locators[i].position, locators[i].rotation);
+    public void OneMoreCleanNail()
+    {
+        print("un ongle en plus!");
+        clean_nails_number++;
+
+        if (clean_nails_number == locators.Length)
+        {
+            HandDone();
+        }
+
+    }
+
+    public void HandDone()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
+    }
 
 }

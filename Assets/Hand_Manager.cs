@@ -41,6 +41,9 @@ public class Hand_Manager : MonoBehaviour
 
     }
 
+    public void NewHand()
+    {
 
+    }
 
 }

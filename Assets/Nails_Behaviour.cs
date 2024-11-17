@@ -66,6 +66,8 @@ public class Nails_Behaviour : MonoBehaviour
         if (current_length == 0) 
         {
             Instantiate(clean_nail, worldPosition, Quaternion.identity);
+
+            IncreaseCompletedNailsCount();
             
         }
 
@@ -79,4 +81,16 @@ public class Nails_Behaviour : MonoBehaviour
         GameObject particle = Instantiate(nail_particle, spawn_position, Quaternion.identity);
     }
 
+
+    void IncreaseCompletedNailsCount()
+    {
+        Transform parentTransform = transform.parent;
+
+        Hand parentHand = parentTransform.GetComponent<Hand>(); //on recupere le parent (ici, la main)
+
+        if (parentHand != null)
+        {
+            parentHand.OneMoreCleanNail();
+        }
+    }
 }
