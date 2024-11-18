@@ -26,7 +26,7 @@ public class Nails_Behaviour : MonoBehaviour
     public Sprite[] sprites;
 
     private int current_length;
-
+    private bool canBeCut = true;
 
 
     // Start is called before the first frame update
@@ -55,7 +55,7 @@ public class Nails_Behaviour : MonoBehaviour
         // Convert to world space
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-        if (current_length > 0)
+        if (current_length > 0 && canBeCut)
         {
             current_length--;
 
@@ -63,12 +63,12 @@ public class Nails_Behaviour : MonoBehaviour
             SpawnParticleAtPosition(worldPosition);
         }
         
-        if (current_length == 0) 
+        if (current_length == 0 && canBeCut) 
         {
             Instantiate(clean_nail, worldPosition, Quaternion.identity);
 
             IncreaseCompletedNailsCount();
-            
+                        
         }
 
         GetComponent<SpriteRenderer>().sprite = sprites[current_length];
@@ -84,6 +84,7 @@ public class Nails_Behaviour : MonoBehaviour
 
     void IncreaseCompletedNailsCount()
     {
+        canBeCut = false;
         Transform parentTransform = transform.parent;
 
         Hand parentHand = parentTransform.GetComponent<Hand>(); //on recupere le parent (ici, la main)

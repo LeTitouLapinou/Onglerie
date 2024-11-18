@@ -26,7 +26,7 @@ public class Hand : MonoBehaviour
     private Vector3 originalPosition;
     private float timeElapsed = 0f;
     private bool isHandNew = true;
-
+    private Hand_Manager handManager;
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +43,7 @@ public class Hand : MonoBehaviour
         getChildInNailCollection();
         InstantiateNailsAtLocators();
 
-
+        handManager = GetComponentInParent<Hand_Manager>();
     }
 
     // Update is called once per frame
@@ -115,7 +115,12 @@ public class Hand : MonoBehaviour
             transform.position = centerPosition;
             isHandNew = false;
         }
-        
+        if (Mathf.Abs(transform.position.y - originalPosition.y) < 0.05 && !isHandNew)
+        {
+            Destroy(gameObject);
+            handManager.NewHand();
+        }
+
         timeElapsed = 0f;
         if (timeElapsed < springDuration)
         {

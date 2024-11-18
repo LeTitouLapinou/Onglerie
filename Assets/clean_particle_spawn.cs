@@ -11,11 +11,12 @@ public class clean_particle_spawn : MonoBehaviour
     {
         clean_sound = GetComponent<AudioSource>();
         clean_sound.pitch = Random.Range(0.9f, 1.1f);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Destroy(gameObject, 2);
     }
 }

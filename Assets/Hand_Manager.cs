@@ -24,17 +24,8 @@ public class Hand_Manager : MonoBehaviour
     {
         getChildInHandCollection();
 
-
-        GameObject selectedHand = Instantiate(handList[Random.Range(0, handList.Length - 1)], this.transform.position, this.transform.rotation);
-
-        //On atrtibue au child les valeurs mises dans le manager
-        Hand handScript = selectedHand.GetComponent<Hand>();
-        if (handScript != null)
-        {
-            handScript.springDuration = springDuration;
-            handScript.springStrength = springStrength;
-            handScript.centerPosition = centerPosition;
-        }
+        NewHand();
+        
     }
 
     // Update is called once per frame
@@ -58,7 +49,16 @@ public class Hand_Manager : MonoBehaviour
 
     public void NewHand()
     {
+        GameObject selectedHand = Instantiate(handList[Random.Range(0, handList.Length - 1)], this.transform.position, this.transform.rotation, this.transform);
 
+        //On atrtibue au child les valeurs mises dans le manager
+        Hand handScript = selectedHand.GetComponent<Hand>();
+        if (handScript != null)
+        {
+            handScript.springDuration = springDuration;
+            handScript.springStrength = springStrength;
+            handScript.centerPosition = centerPosition;
+        }
     }
 
 }
