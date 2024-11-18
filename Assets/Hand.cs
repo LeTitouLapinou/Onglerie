@@ -28,6 +28,10 @@ public class Hand : MonoBehaviour
     private bool isHandNew = true;
     private Hand_Manager handManager;
 
+    Quaternion targetAngle;
+    public float WaitBetweenWobbles = 1;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +48,8 @@ public class Hand : MonoBehaviour
         InstantiateNailsAtLocators();
 
         handManager = GetComponentInParent<Hand_Manager>();
+
+        InvokeRepeating("ChangeTargetAngle", 0, 4);
     }
 
     // Update is called once per frame
@@ -61,6 +67,8 @@ public class Hand : MonoBehaviour
         {
             HandEnterOrLeave(originalPosition);            
         }
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetAngle, Time.deltaTime);
     }
 
 
@@ -135,6 +143,13 @@ public class Hand : MonoBehaviour
 
             transform.position = newPos;
         }
+    }
+
+    void ChangeTargetAngle()
+    {
+        print("angle change");
+        float curve = Mathf.Sin(Random.Range(0, Mathf.PI * 2));
+        targetAngle = Quaternion.Euler(0, 0, curve * 10f); // Apply some random rotation within a range
     }
 
 }
