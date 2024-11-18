@@ -7,8 +7,14 @@ public class Hand_Manager : MonoBehaviour
 {
 
     public GameObject hand_collection_prefab;
-    public Vector3 spawn_position;
-    
+    //public Vector3 spawn_position;
+    //public Quaternion spawn_rotation;
+
+    public float springDuration = 1f; // Duration of one full oscillation (spring cycle)
+    public float springStrength = 0.2f; // How much overshoot the spring has
+    public Vector3 centerPosition = new Vector3(0f, 3.5f, 0f); // The maximum off-screen position
+
+
     private GameObject[] handList;
     
     
@@ -19,7 +25,16 @@ public class Hand_Manager : MonoBehaviour
         getChildInHandCollection();
 
 
-        Instantiate(handList[Random.Range(0, handList.Length - 1)], spawn_position, Quaternion.identity);
+        GameObject selectedHand = Instantiate(handList[Random.Range(0, handList.Length - 1)], this.transform.position, this.transform.rotation);
+
+        //On atrtibue au child les valeurs mises dans le manager
+        Hand handScript = selectedHand.GetComponent<Hand>();
+        if (handScript != null)
+        {
+            handScript.springDuration = springDuration;
+            handScript.springStrength = springStrength;
+            handScript.centerPosition = centerPosition;
+        }
     }
 
     // Update is called once per frame

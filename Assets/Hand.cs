@@ -14,12 +14,26 @@ public class Hand : MonoBehaviour
 
     public Transform[] locators;
 
+    public float springDuration; // Duration of one full oscillation (spring cycle)
+    public float springStrength; // How much overshoot the spring has
+    public Vector3 centerPosition = new Vector3(0, 3, 0); // The maximum off-screen position
+    
+
     private GameObject[] nailList;
     private GameObject nail_collectionInstance;
+
+    private bool isHandDone = false;
+    private Vector3 originalPosition;
+    private float timeElapsed = 0f;
+    private bool isHandNew = true;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        originalPosition = transform.position;
+
+        print(transform.position);
         nail_collectionInstance = Instantiate(nail_collectionPrefab, new Vector3(1000f, 1000f, 1000f), Quaternion.identity); //On instancie le prefab de nails pour qu'il soit dans la scene
         
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
@@ -36,6 +50,17 @@ public class Hand : MonoBehaviour
     void Update()
     {
         
+        //Si nouvelle main, alors on la fait descendre
+        if(isHandNew)
+        {
+            HandEnterOrLeave(centerPosition);
+        }
+
+        //Si main terminee, on la fait sortir
+        if (isHandDone)
+        {
+            HandEnterOrLeave(originalPosition);            
+        }
     }
 
 
@@ -77,7 +102,34 @@ public class Hand : MonoBehaviour
 
     public void HandDone()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
+        isHandDone = true;
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
+    }
+
+
+    public void HandEnterOrLeave(Vector3 positionGoal)
+    {
+        
+        if(Mathf.Abs(transform.position.y-centerPosition.y)<0.01 && isHandNew)
+        {
+            transform.position = centerPosition;
+            isHandNew = false;
+        }
+        
+        timeElapsed = 0f;
+        if (timeElapsed < springDuration)
+        {
+            timeElapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(timeElapsed / springDuration);
+
+            // Apply a spring effect using a sine wave for smoothness
+            // Overshoot the target position for that "spring" effect
+            float dropValue = Mathf.Sin(t * Mathf.PI * 0.5f);  // Sin function for smooth bounce
+            float overshootFactor = Mathf.Sin(t * Mathf.PI * 1.5f); // Slight overshoot effect
+            Vector3 newPos = Vector3.Lerp(transform.position, positionGoal, dropValue + overshootFactor);
+
+            transform.position = newPos;
+        }
     }
 
 }
