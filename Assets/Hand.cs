@@ -27,9 +27,14 @@ public class Hand : MonoBehaviour
     private float timeElapsed = 0f;
     private bool isHandNew = true;
     private Hand_Manager handManager;
+    public bool isAlienHanding = false;
+    public Color color;
+
 
     Quaternion targetAngle;
+    Vector3 targetPosition;
     public float WaitBetweenWobbles = 1;
+    public float sineSpeed = 1;
 
 
     // Start is called before the first frame update
@@ -37,19 +42,18 @@ public class Hand : MonoBehaviour
     {
         originalPosition = transform.position;
 
-        print(transform.position);
         nail_collectionInstance = Instantiate(nail_collectionPrefab, new Vector3(1000f, 1000f, 1000f), Quaternion.identity); //On instancie le prefab de nails pour qu'il soit dans la scene
-        
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
 
-        renderer.color = UnityEngine.Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f); //couleur aleatoire de la main
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.color = color; //couleur aleatoire definie dans le script Alien, recuperee par Hand Manager
 
         getChildInNailCollection();
         InstantiateNailsAtLocators();
 
         handManager = GetComponentInParent<Hand_Manager>();
 
-        InvokeRepeating("ChangeTargetAngle", 0, 4);
+        InvokeRepeating("ChangeTargetAngle", 0, 2f);
+        
     }
 
     // Update is called once per frame
@@ -65,10 +69,16 @@ public class Hand : MonoBehaviour
         //Si main terminee, on la fait sortir
         if (isHandDone)
         {
-            HandEnterOrLeave(originalPosition);            
+            HandEnterOrLeave(originalPosition + new Vector3(0,5,0));    
         }
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetAngle, Time.deltaTime);
+        if(!isHandDone)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetAngle, Time.deltaTime);
+            targetPosition = new Vector3(SineAmount().x, SineAmount().y + 3, 0);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime);
+        }
+        
     }
 
 
@@ -118,16 +128,20 @@ public class Hand : MonoBehaviour
     public void HandEnterOrLeave(Vector3 positionGoal)
     {
         
-        if(Mathf.Abs(transform.position.y-centerPosition.y)<0.01 && isHandNew)
+        if(Mathf.Abs(transform.position.y-centerPosition.y)<0.05 && isHandNew)
         {
             transform.position = centerPosition;
             isHandNew = false;
         }
-        if (Mathf.Abs(transform.position.y - originalPosition.y) < 0.05 && !isHandNew)
+        
+        if (Mathf.Abs(transform.position.y - originalPosition.y) < 1 && isHandDone) //si la main est sortie, on la detruit
         {
+            
             Destroy(gameObject);
+            Destroy(nail_collectionInstance);
             handManager.NewHand();
         }
+        
 
         timeElapsed = 0f;
         if (timeElapsed < springDuration)
@@ -149,7 +163,13 @@ public class Hand : MonoBehaviour
     {
         print("angle change");
         float curve = Mathf.Sin(Random.Range(0, Mathf.PI * 2));
-        targetAngle = Quaternion.Euler(0, 0, curve * 10f); // Apply some random rotation within a range
+        targetAngle = Quaternion.Euler(0, 0, curve * 10f + 180); // Apply some random rotation within a range
+        
+    }
+
+    public Vector2 SineAmount()
+    {
+        return new Vector2(Mathf.Sin(Time.time * sineSpeed), Mathf.Cos(Time.time * sineSpeed) * 0.5f);
     }
 
 }
