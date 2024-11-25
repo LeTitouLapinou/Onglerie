@@ -47,3 +47,12 @@ TagManager:
   - name: Nail_particle
     uniqueID: 3416035449
     locked: 0
+  - name: New Layer 3
+    uniqueID: 2708224455
+    locked: 0
+  - name: New Layer 4
+    uniqueID: 4010434625
+    locked: 0
+  - name: Nail_closeup
+    uniqueID: 1407682613
+    locked: 0
