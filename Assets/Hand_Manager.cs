@@ -15,6 +15,7 @@ public class Hand_Manager : MonoBehaviour
     public float springStrength = 0.2f; // How much overshoot the spring has
     public Vector3 centerPosition = new Vector3(0f, 3.5f, 0f); // The maximum off-screen position
     public bool isAlienHanding = false;
+    public bool isAlienDone = false;
     public Color color;
 
     private GameObject[] handList;
@@ -37,6 +38,12 @@ public class Hand_Manager : MonoBehaviour
         {
             NewHand();
             isAlienHanding = false;
+        }
+
+        if (isAlienDone)
+        {
+            Debug.Log("finito alienito");
+            //Fonction pour alien qui s'en va
         }
     }
 

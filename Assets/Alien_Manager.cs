@@ -34,7 +34,6 @@ public class Alien_Manager : MonoBehaviour
         }
 
 
-        
         if (isSlotFree)
         {
             if (instantiatedWaitingAliens.Count > 0)
@@ -55,13 +54,13 @@ public class Alien_Manager : MonoBehaviour
 
         else
         {
-            for (int i = 0; i < currentlyWaitingAliens; i++)
+            for (int i = 0; i < currentlyWaitingAliens-1; i++)
             {
                 GameObject alienInLine = instantiatedWaitingAliens[i];
                 Alien alienInLineScript = alienInLine.GetComponent<Alien>();
 
                 alienInLineScript.isMoving = true;
-                alienInLineScript.targetPositionX = -5 - i * 2;
+                alienInLineScript.targetPositionX = -5 - i * 2; //A TWEAKER POUR FILE ATTENTE
                 if (Mathf.Abs(alienInLine.transform.position.x - alienInLineScript.targetPositionX) < 0.2 && alienInLineScript.isMoving) //Si alien atteint la position voulue
                 {
                     alienInLineScript.isMoving = false;

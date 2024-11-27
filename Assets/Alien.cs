@@ -11,6 +11,8 @@ public class Alien : MonoBehaviour
     private Vector3 targetPosition;
     public float targetPositionX;
 
+    public int occupiedSlot = 0;
+
     private bool isSlot01Free = false;
     private bool isSlot02Free = true;
     private bool isSlot03Free = false;

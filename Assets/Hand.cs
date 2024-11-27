@@ -139,6 +139,7 @@ public class Hand : MonoBehaviour
             
             Destroy(gameObject);
             Destroy(nail_collectionInstance);
+            handManager.isAlienDone = true;
             
 
             //handManager.alienManager.
