@@ -79,6 +79,7 @@ public class Nails_Behaviour : MonoBehaviour
     void SpawnParticleAtPosition(Vector2 spawn_position)
     {
         GameObject particle = Instantiate(nail_particle, spawn_position, Quaternion.identity);
+        GameManager.temp_nail_currency++;
     }
 
 

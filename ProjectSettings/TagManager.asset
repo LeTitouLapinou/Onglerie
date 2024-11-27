@@ -47,12 +47,18 @@ TagManager:
   - name: Nail_particle
     uniqueID: 3416035449
     locked: 0
-  - name: New Layer 3
+  - name: Saloon_closeup
     uniqueID: 2708224455
     locked: 0
   - name: New Layer 4
     uniqueID: 4010434625
     locked: 0
+  - name: Alien_client
+    uniqueID: 2209418345
+    locked: 0
   - name: Nail_closeup
     uniqueID: 1407682613
+    locked: 0
+  - name: Saloon_counter
+    uniqueID: 1407509765
     locked: 0

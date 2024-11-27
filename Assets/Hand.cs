@@ -139,7 +139,11 @@ public class Hand : MonoBehaviour
             
             Destroy(gameObject);
             Destroy(nail_collectionInstance);
-            handManager.NewHand();
+            
+
+            //handManager.alienManager.
+            //SI ON VEUT UNE NOUVELLE MAIN
+            //handManager.NewHand();
         }
         
 

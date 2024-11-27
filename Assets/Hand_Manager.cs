@@ -7,6 +7,7 @@ public class Hand_Manager : MonoBehaviour
 {
 
     public GameObject hand_collection_prefab;
+    public GameObject alienManager;
     //public Vector3 spawn_position;
     //public Quaternion spawn_rotation;
 
@@ -24,7 +25,6 @@ public class Hand_Manager : MonoBehaviour
     void Start()
     {
         getChildInHandCollection();
-
         
 
         

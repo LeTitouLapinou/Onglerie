@@ -6,30 +6,39 @@ public class Alien : MonoBehaviour
 {
     public GameObject handManager;
 
-    private bool isMoving;
+    public bool isMoving = false;
     private bool isHanding;
     private Vector3 targetPosition;
+    public float targetPositionX;
+
+    private bool isSlot01Free = false;
+    private bool isSlot02Free = true;
+    private bool isSlot03Free = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        isMoving = true;
+        
         isHanding = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (isMoving)
         {
-            targetPosition = new Vector3(0, transform.position.y + SineAmount(), transform.position.z);
+            Debug.Log(name + "is moving");
+
+            targetPosition = new Vector3(targetPositionX, transform.position.y + SineAmount(), transform.position.z); //On lui donne la prochaine position
+
 
             Vector3 newPos = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime);
             transform.position = newPos;
         }
 
-        if (Mathf.Abs(transform.position.x - targetPosition.x) < 0.2 && isMoving) //Si alien atteint la position voulue
+        if (Mathf.Abs(transform.position.x - targetPositionX) < 0.2 && isMoving) //Si alien atteint la position voulue
         {
             isMoving = false;
 
@@ -55,4 +64,11 @@ public class Alien : MonoBehaviour
         return Mathf.Sin(Time.time * 10);
     }
 
+    public void slotSelection(int slotNumber)
+    {
+        if (slotNumber == 1)
+        {
+
+        }
+    }
 }
