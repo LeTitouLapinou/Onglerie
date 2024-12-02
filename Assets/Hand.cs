@@ -30,6 +30,7 @@ public class Hand : MonoBehaviour
     public bool isAlienHanding = false;
     public Color color;
 
+    public int handSlot = 0;
 
     Quaternion targetAngle;
     Vector3 targetPosition;
@@ -41,6 +42,8 @@ public class Hand : MonoBehaviour
     void Start()
     {
         originalPosition = transform.position;
+        centerPosition = new Vector3(originalPosition.x, originalPosition.y - 3, originalPosition.z);
+
 
         nail_collectionInstance = Instantiate(nail_collectionPrefab, new Vector3(1000f, 1000f, 1000f), Quaternion.identity); //On instancie le prefab de nails pour qu'il soit dans la scene
 
@@ -128,9 +131,9 @@ public class Hand : MonoBehaviour
     public void HandEnterOrLeave(Vector3 positionGoal)
     {
         
-        if(Mathf.Abs(transform.position.y-centerPosition.y)<0.05 && isHandNew)
+        if(Mathf.Abs(transform.position.y-positionGoal.y)<0.05 && isHandNew)
         {
-            transform.position = centerPosition;
+            transform.position = positionGoal;
             isHandNew = false;
         }
         
@@ -140,9 +143,11 @@ public class Hand : MonoBehaviour
             Destroy(gameObject);
             Destroy(nail_collectionInstance);
             handManager.isAlienDone = true;
-            
 
-            //handManager.alienManager.
+            Debug.Log(handSlot);
+
+            handManager.alienManager.AlienLeaves(handSlot); //Call de la fonction qui fait partir le alien
+
             //SI ON VEUT UNE NOUVELLE MAIN
             //handManager.NewHand();
         }

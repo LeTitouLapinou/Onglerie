@@ -20,6 +20,10 @@ public class Alien_Manager : MonoBehaviour
     public bool isSlot02Free = true;
     public bool isSlot03Free = false;
 
+    public GameObject slot01AlienID;
+    public GameObject slot02AlienID;
+    public GameObject slot03AlienID;
+
     private GameObject[] alienList;
     private List<GameObject> instantiatedWaitingAliens = new List<GameObject>(); // List to store instantiated aliens waiting in queue
 
@@ -75,11 +79,15 @@ public class Alien_Manager : MonoBehaviour
         float tempTargetPositionX = -10;
         int tempAssignedSlot = 0;
 
+        GameObject firstAlienInLine = instantiatedWaitingAliens[0];
+        Alien firstAlienInLineScript = firstAlienInLine.GetComponent<Alien>();
+
         if (isSlot01Free)
         {
             tempTargetPositionX = -5;
             tempAssignedSlot = 1;
             isSlot01Free = false;
+            slot01AlienID = firstAlienInLine;
         }
         else if (isSlot02Free)
         {
@@ -88,23 +96,22 @@ public class Alien_Manager : MonoBehaviour
             tempTargetPositionX = 0;
             tempAssignedSlot = 2;
             isSlot02Free = false;
+            slot02AlienID = firstAlienInLine;
+
         }
         else if (isSlot03Free)
         {
             tempTargetPositionX = 5;
             tempAssignedSlot = 3;
             isSlot03Free = false;
+            slot03AlienID = firstAlienInLine;
+
         }
-
-
 
         // Ensure that there is at least one alien waiting
         if (instantiatedWaitingAliens.Count > 0)
         {
-            GameObject firstAlienInLine = instantiatedWaitingAliens[0];
-            Alien firstAlienInLineScript = firstAlienInLine.GetComponent<Alien>();
-
-
+            
             Debug.Log("First Alien is " + firstAlienInLine.name);
             if (firstAlienInLineScript != null)
             {
@@ -120,7 +127,31 @@ public class Alien_Manager : MonoBehaviour
 
     }
 
+    public void AlienLeaves(int handSlot)
+    {
 
+        int slot = handSlot;
+        float positionSortie = 20;
+        
+        switch (slot)
+        {
+            case 1:
+                isSlot01Free = true;
+                slot01AlienID.GetComponent<Alien>().targetPositionX = positionSortie;
+                break;
+            case 2:
+                isSlot02Free = true;
+                slot02AlienID.GetComponent<Alien>().targetPositionX = positionSortie;
+
+                break;
+            case 3:
+                isSlot03Free = true;
+                slot03AlienID.GetComponent<Alien>().targetPositionX = positionSortie;
+
+                break;
+
+        }
+    }
 
 
     public void NewAlien()
@@ -140,10 +171,7 @@ public class Alien_Manager : MonoBehaviour
         {
             alienScript.handManager = handManager;
         }
-        if (handManagerScript != null)
-        {
-            handManagerScript.color = randomColor;
-        }
+        
 
         // Add instantiated alien to the list
         instantiatedWaitingAliens.Add(alien);

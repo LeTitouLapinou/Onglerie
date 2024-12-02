@@ -7,7 +7,7 @@ public class Hand_Manager : MonoBehaviour
 {
 
     public GameObject hand_collection_prefab;
-    public GameObject alienManager;
+    public Alien_Manager alienManager;
     //public Vector3 spawn_position;
     //public Quaternion spawn_rotation;
 
@@ -16,7 +16,7 @@ public class Hand_Manager : MonoBehaviour
     public Vector3 centerPosition = new Vector3(0f, 3.5f, 0f); // The maximum off-screen position
     public bool isAlienHanding = false;
     public bool isAlienDone = false;
-    public Color color;
+    
 
     public bool canSpawnHand = true;
 
@@ -42,11 +42,6 @@ public class Hand_Manager : MonoBehaviour
             isAlienHanding = false;
         }
 
-        if (isAlienDone)
-        {
-            Debug.Log("finito alienito");
-            //Fonction pour alien qui s'en va
-        }
     }
 
     public void getChildInHandCollection()
@@ -62,7 +57,7 @@ public class Hand_Manager : MonoBehaviour
 
     }
 
-    public void NewHand(float positionX)
+    public void NewHand(float positionX, int slot, UnityEngine.Color color)
     {
         canSpawnHand = false;
 
@@ -77,8 +72,9 @@ public class Hand_Manager : MonoBehaviour
             handScript.springStrength = springStrength;
             handScript.centerPosition = centerPosition;
             handScript.color = color;
-            
+            handScript.handSlot = slot;
         }
     }
 
+   
 }

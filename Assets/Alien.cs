@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class Alien : MonoBehaviour
@@ -12,7 +13,6 @@ public class Alien : MonoBehaviour
     public float targetPositionX;
 
     public int assignedSlot = 0;
-
 
 
 
@@ -35,7 +35,8 @@ public class Alien : MonoBehaviour
         {
             if (assignedSlot != 0)
             {
-                GiveHand(transform.position.x);
+                SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+                GiveHand(transform.position.x, spriteRenderer.color);
             }
 
             isMoving = false;
@@ -67,12 +68,12 @@ public class Alien : MonoBehaviour
     }
 
 
-    public void GiveHand(float positionX)
+    public void GiveHand(float positionX, UnityEngine.Color colorAlien)
     {
         canHand = false;
         Hand_Manager handManagerScript = handManager.GetComponent<Hand_Manager>();
         handManagerScript.canSpawnHand = true;
-        handManagerScript.NewHand(positionX);
+        handManagerScript.NewHand(positionX, assignedSlot, colorAlien);
         //Mettre code de l'animation de tendage de main
     }
 
@@ -81,11 +82,6 @@ public class Alien : MonoBehaviour
         return Mathf.Sin(Time.time * 10);
     }
 
-    public void slotSelection(int slotNumber)
-    {
-        if (slotNumber == 1)
-        {
+    
+ }
 
-        }
-    }
-}

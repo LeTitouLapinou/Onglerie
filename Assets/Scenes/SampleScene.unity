@@ -748,7 +748,7 @@ PrefabInstance:
     - target: {fileID: 5324354655320329483, guid: 4e46d89173335c848a91c3a2bbface68, type: 3}
       propertyPath: alienManager
       value: 
-      objectReference: {fileID: 455864783}
+      objectReference: {fileID: 455864785}
     - target: {fileID: 5324354655320329483, guid: 4e46d89173335c848a91c3a2bbface68, type: 3}
       propertyPath: spawn_rotation.z
       value: 0
