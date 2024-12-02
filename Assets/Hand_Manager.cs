@@ -13,7 +13,6 @@ public class Hand_Manager : MonoBehaviour
 
     public float springDuration = 1f; // Duration of one full oscillation (spring cycle)
     public float springStrength = 0.2f; // How much overshoot the spring has
-    public Vector3 centerPosition = new Vector3(0f, 3.5f, 0f); // The maximum off-screen position
     public bool isAlienHanding = false;
     public bool isAlienDone = false;
     
@@ -68,9 +67,8 @@ public class Hand_Manager : MonoBehaviour
         Hand handScript = selectedHand.GetComponent<Hand>();
         if (handScript != null)
         {
-            handScript.springDuration = springDuration;
-            handScript.springStrength = springStrength;
-            handScript.centerPosition = centerPosition;
+            //handScript.springDuration = springDuration;
+            //handScript.springStrength = springStrength;
             handScript.color = color;
             handScript.handSlot = slot;
         }
