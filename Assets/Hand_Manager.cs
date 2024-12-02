@@ -18,6 +18,8 @@ public class Hand_Manager : MonoBehaviour
     public bool isAlienDone = false;
     public Color color;
 
+    public bool canSpawnHand = true;
+
     private GameObject[] handList;
     
     
@@ -36,7 +38,7 @@ public class Hand_Manager : MonoBehaviour
     {
         if (isAlienHanding) //Cette valeur est changee par le script Alien
         {
-            NewHand();
+            //NewHand();
             isAlienHanding = false;
         }
 
@@ -60,9 +62,12 @@ public class Hand_Manager : MonoBehaviour
 
     }
 
-    public void NewHand()
+    public void NewHand(float positionX)
     {
-        GameObject selectedHand = Instantiate(handList[Random.Range(0, handList.Length - 1)], this.transform.position, this.transform.rotation, this.transform);
+        canSpawnHand = false;
+
+        Vector3 tempSpawnPosition = new Vector3(positionX, transform.position.y, transform.position.z);
+        GameObject selectedHand = Instantiate(handList[Random.Range(0, handList.Length - 1)], tempSpawnPosition, this.transform.rotation, this.transform);
 
         //On atrtibue au child les valeurs mises dans le manager
         Hand handScript = selectedHand.GetComponent<Hand>();

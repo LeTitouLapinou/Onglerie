@@ -7,31 +7,44 @@ public class Alien : MonoBehaviour
     public GameObject handManager;
 
     public bool isMoving = false;
-    private bool isHanding;
+    private bool canHand = true;
     private Vector3 targetPosition;
     public float targetPositionX;
 
-    public int occupiedSlot = 0;
+    public int assignedSlot = 0;
 
-    private bool isSlot01Free = false;
-    private bool isSlot02Free = true;
-    private bool isSlot03Free = false;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
         
-        isHanding = false;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (Mathf.Abs(targetPositionX - transform.position.x) >= 0.2) //Si la position actuelle et la position target sont trop loin, on avance
+        {
+            isMoving = true;
+        }
+        else if (canHand)
+        {
+            if (assignedSlot != 0)
+            {
+                GiveHand(transform.position.x);
+            }
+
+            isMoving = false;
+        }
+
+
         if (isMoving)
         {
-            Debug.Log(name + "is moving");
+            //Debug.Log(name + " is moving to " + targetPositionX);
 
             targetPosition = new Vector3(targetPositionX, transform.position.y + SineAmount(), transform.position.z); //On lui donne la prochaine position
 
@@ -39,25 +52,27 @@ public class Alien : MonoBehaviour
             Vector3 newPos = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime);
             transform.position = newPos;
         }
-
+        /*
         if (Mathf.Abs(transform.position.x - targetPositionX) < 0.2 && isMoving) //Si alien atteint la position voulue
         {
             isMoving = false;
 
-            if (Mathf.Abs(transform.position.x) <= 0.2) //Si alien est au centre
+            if (Mathf.Abs(transform.position.x) <= 0.2) //Si alien est au centre A MODIFIER PAR SLOT POSITIONS
             {
                 GiveHand();
                 print("alien au centre");
             }
         }
+        */
     }
 
 
-    public void GiveHand()
+    public void GiveHand(float positionX)
     {
-        isHanding = true;
+        canHand = false;
         Hand_Manager handManagerScript = handManager.GetComponent<Hand_Manager>();
-        handManagerScript.isAlienHanding = true;
+        handManagerScript.canSpawnHand = true;
+        handManagerScript.NewHand(positionX);
         //Mettre code de l'animation de tendage de main
     }
 

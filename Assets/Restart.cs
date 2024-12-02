@@ -5,8 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Restart : MonoBehaviour
 {
+
+    public Alien_Manager alienManager;
+
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
+        alienManager.isSlot03Free = true;
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
     }
 }

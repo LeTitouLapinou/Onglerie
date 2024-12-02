@@ -12,9 +12,13 @@ public class Alien_Manager : MonoBehaviour
     public GameObject alienPrefabCollection;
     public GameObject handManager;
 
-    public int maxWaitingAliens = 3;
+    public int maxWaitingAliens = 2;
     public int currentlyWaitingAliens = 0;
     public bool isSlotFree = true;
+
+    public bool isSlot01Free = false;
+    public bool isSlot02Free = true;
+    public bool isSlot03Free = false;
 
     private GameObject[] alienList;
     private List<GameObject> instantiatedWaitingAliens = new List<GameObject>(); // List to store instantiated aliens waiting in queue
@@ -28,56 +32,96 @@ public class Alien_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentlyWaitingAliens < maxWaitingAliens)
+        if (instantiatedWaitingAliens.Count < maxWaitingAliens)
         {
-            NewAlien();
+            NewAlien(); //nouvel alien si il y en a moins que la file d'attente autorisée
         }
 
 
-        if (isSlotFree)
+        if (isSlot01Free || isSlot02Free || isSlot03Free) //Check si il y a un emplacement libre
         {
-            if (instantiatedWaitingAliens.Count > 0)
-            {
-                GameObject firstAlienInLine = instantiatedWaitingAliens[0];
-                Debug.Log(firstAlienInLine);
-
-                Alien firstAlienInLineScript = instantiatedWaitingAliens[0].GetComponent<Alien>(); //On recup le script du premier alien dans la file d'attente
-
-                firstAlienInLineScript.isMoving = true;
-                firstAlienInLineScript.targetPositionX = 0; //on lui dit ou aller
-
-                isSlotFree = false;
-                instantiatedWaitingAliens.Remove(firstAlienInLine);
-                //Debug.Log("nb Alien waiting: " + instantiatedWaitingAliens.Count);
-            }
+            AssignCounterPosition();
         }
-
         else
         {
-            for (int i = 0; i < currentlyWaitingAliens-1; i++)
+
+            for (int i = 1; i < instantiatedWaitingAliens.Count; i++) //bouger file attente
             {
                 GameObject alienInLine = instantiatedWaitingAliens[i];
                 Alien alienInLineScript = alienInLine.GetComponent<Alien>();
 
-                alienInLineScript.isMoving = true;
-                alienInLineScript.targetPositionX = -5 - i * 2; //A TWEAKER POUR FILE ATTENTE
-                if (Mathf.Abs(alienInLine.transform.position.x - alienInLineScript.targetPositionX) < 0.2 && alienInLineScript.isMoving) //Si alien atteint la position voulue
-                {
-                    alienInLineScript.isMoving = false;
-                }
+                alienInLineScript.targetPositionX = -5 - (3*i); //espacement de la file d'attente
             }
         }
+
     }
 
+                     
     public void GetChildInAlienCollection()
     {
-        alienList = new GameObject[alienPrefabCollection.transform.childCount]; //On cree la liste de gameobjects 'nail' depuis la nail_collection
+        alienList = new GameObject[alienPrefabCollection.transform.childCount]; //On cree la liste de gameobjects 'alien' depuis la alien_collection
 
         for (int i = 0; i < alienPrefabCollection.transform.childCount; i++)
         {
             alienList[i] = alienPrefabCollection.transform.GetChild(i).gameObject;
         }
     }
+
+
+    public void AssignCounterPosition()
+    {
+        Debug.Log("Assign counter position");
+
+        float tempTargetPositionX = -10;
+        int tempAssignedSlot = 0;
+
+        if (isSlot01Free)
+        {
+            tempTargetPositionX = -5;
+            tempAssignedSlot = 1;
+            isSlot01Free = false;
+        }
+        else if (isSlot02Free)
+        {
+            Debug.Log("Assign counter position Slot 2");
+
+            tempTargetPositionX = 0;
+            tempAssignedSlot = 2;
+            isSlot02Free = false;
+        }
+        else if (isSlot03Free)
+        {
+            tempTargetPositionX = 5;
+            tempAssignedSlot = 3;
+            isSlot03Free = false;
+        }
+
+
+
+        // Ensure that there is at least one alien waiting
+        if (instantiatedWaitingAliens.Count > 0)
+        {
+            GameObject firstAlienInLine = instantiatedWaitingAliens[0];
+            Alien firstAlienInLineScript = firstAlienInLine.GetComponent<Alien>();
+
+
+            Debug.Log("First Alien is " + firstAlienInLine.name);
+            if (firstAlienInLineScript != null)
+            {
+                Debug.Log("caca");
+                // Update targetPositionX and assignedSlot
+                firstAlienInLineScript.targetPositionX = tempTargetPositionX;
+                firstAlienInLineScript.assignedSlot = tempAssignedSlot;
+            }
+
+            instantiatedWaitingAliens.Remove(firstAlienInLine);
+        }
+
+
+    }
+
+
+
 
     public void NewAlien()
     {
@@ -105,6 +149,15 @@ public class Alien_Manager : MonoBehaviour
         instantiatedWaitingAliens.Add(alien);
 
         currentlyWaitingAliens++;
+
+        /*
+        foreach (var x in instantiatedWaitingAliens)
+        {
+            Debug.Log(x.ToString());
+        }
+        */
+
+
 
     }
 

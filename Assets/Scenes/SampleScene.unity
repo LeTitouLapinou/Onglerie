@@ -172,6 +172,9 @@ MonoBehaviour:
   maxWaitingAliens: 3
   currentlyWaitingAliens: 0
   isSlotFree: 1
+  isSlot01Free: 0
+  isSlot02Free: 1
+  isSlot03Free: 0
 --- !u!212 &455864786
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -607,7 +610,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.2, y: -115.4}
+  m_AnchoredPosition: {x: 182.5, y: -72.5}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1206785529
@@ -716,6 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c0366d248d23c4fb1d5ab45f3b1cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alienManager: {fileID: 455864785}
 --- !u!1 &1651128913 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6230782979105407084, guid: 4e46d89173335c848a91c3a2bbface68, type: 3}
